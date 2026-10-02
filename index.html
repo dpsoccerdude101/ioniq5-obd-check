@@ -334,7 +334,7 @@
       <div class="field">
         <div class="fl"><label for="red_cells">Cells that are not green</label><span class="verdict" data-v></span></div>
         <div class="in"><input id="red_cells" data-field="red_cells" inputmode="numeric" placeholder="0" autocomplete="off"><span class="unit">cells</span></div>
-        <div class="hint">Count the amber and red ones. Photograph the grid either way.</div>
+        <div class="hint">Count the amber and red ones. <b>Any single red cell is a flag on its own</b>, whatever the count, because red means over 100 mV. If you see one, write it in the notes at the end too.</div>
       </div>
     </div>
   </section>
@@ -514,11 +514,9 @@
     v12_soc:function(){ var v=num('v12_soc'); if(v===null) return null; return v>=80?'ok':(v>=50?'warn':'bad'); },
     ac_test:function(){ if(!store.ac_test) return null; if(store.ac_test==='Held steady') return 'ok';
       if(store.ac_test==='They refused'||store.ac_test==='No AC available') return 'warn'; return 'bad'; },
-    dtc_codes:function(){ var v=(store.dtc_codes||'').trim(); if(!v) return null;
-      var letters=v.toUpperCase().replace(/[^A-Z]/g,'');
-      if(/^(NONE|NOCODES|NIL)$/.test(letters)) return 'ok';
-      var stripped=v.toUpperCase().replace(/P0C17/g,'').replace(/[^A-Z0-9]/g,'');
-      return stripped.length<=2 ? 'ok' : 'bad'; }
+    dtc_codes:function(){ var raw=(store.dtc_codes||'').trim(); if(!raw) return null;
+      var codes=(raw.toUpperCase().match(/\b[PCBU][0-9A-F]{4,6}\b/g)||[]).filter(function(c){ return c!=='P0C17'; });
+      return codes.length ? 'bad' : 'ok'; }
   };
 
   function grade(id){
@@ -551,10 +549,9 @@
         f.classList.toggle('flag', g==='bad');
       });
     });
-    var total=fields.length;
-    document.getElementById('count').textContent=done+' / '+document.querySelectorAll('[data-step]').length+' steps, '+
-      fields.filter(function(el){return has(el.dataset.field);}).length+' / '+total+' boxes';
-    document.getElementById('bar').style.width=(fields.filter(function(el){return has(el.dataset.field);}).length/total*100)+'%';
+    var filledN=fields.filter(function(el){return has(el.dataset.field);}).length;
+    document.getElementById('count').textContent=filledN+' / '+fields.length+' read';
+    document.getElementById('bar').style.width=(filledN/fields.length*100)+'%';
     buildOut();
     try{ localStorage.setItem(KEY,JSON.stringify(store)); }catch(e){}
   }
