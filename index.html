@@ -356,7 +356,10 @@
     <ul class="see">
       <li>With the car in READY, the DC-DC converter should hold the 12V system at roughly <b>13.5 to 14.7 V</b> and push its state of charge up. Those two are real electrical facts, so they are graded.</li>
       <li>The ICCU failure shows here first: voltage sagging toward or below <b>12.4 V</b> with the car running, or a state of charge that sits low and does not climb while you watch it.</li>
-      <li>Then have them put it on their <b>Level 2 AC</b> charger for ten minutes. Confirm <b>Charge Type</b> reads <b>AC</b>. A session that <b>faults, restarts, or throttles hard</b> on AC is the onboard charger telling on itself. DC bypasses the onboard charger completely and will look fine, which proves nothing.</li>
+      <li><b>Any AC works, level 1 or level 2.</b> Both go through the same onboard charger and the same ICCU. Only DC fast charging bypasses it, which is why a DC session proves nothing here.</li>
+      <li>If they only have a 120V shop outlet, use that, with the cord already in the trunk. Ten minutes is enough. You are not filling the battery, you are watching whether the session holds.</li>
+      <li>Confirm <b>Charge Type</b> reads <b>AC</b>. A session that faults, restarts or throttles hard is the onboard charger telling on itself.</li>
+      <li><b>No adapter needed.</b> A 2023 takes a J1772 handle for AC and CCS1 for DC, and every US level 2 station already has a J1772 cable. Adapters are a 2025-and-later problem.</li>
       <li>Read the current sign convention as positive charging the 12V, negative draining it. No box for it, it is not a decider.</li>
     </ul>
     <div class="fields">
@@ -382,11 +385,11 @@
             <option value="No AC available">No AC charger available</option>
           </select>
         </div>
-        <div class="hint">A refusal or a missing charger is amber, not green. Write it down, it is information about the seller.</div>
+        <div class="hint">Level 1 is fine, it is still AC. A refusal or a missing charger is amber, not green. Write it down, it is information about the seller.</div>
       </div>
     </div>
     <div class="note">
-      <p><strong>Do not leave the lot without this.</strong> If they will not let the car sit on a charger for ten minutes, that refusal is the finding, and it is worth more than anything the scanner told you.</p>
+      <p><strong>Do not leave the lot without this.</strong> A refusal to let it sit on a charger for ten minutes is itself the finding, and it is worth more than anything the scanner told you.</p>
     </div>
   </section>
 
