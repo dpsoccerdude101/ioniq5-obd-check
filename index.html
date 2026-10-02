@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#FAF7F2">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23A33B14'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23FAF7F2'/%3E%3C/svg%3E">
 <title>IONIQ 5 OBD check</title>
 <style>
   :root{
@@ -23,7 +24,7 @@
     background:var(--bg);color:var(--ink);
     font:400 16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     text-wrap:pretty;
-    padding-bottom:96px;
+    padding-bottom:calc(128px + env(safe-area-inset-bottom));
   }
   .wrap{max-width:660px;margin:0 auto;padding:0 16px}
 
@@ -47,7 +48,7 @@
     border:1px solid var(--line-strong);background:var(--surface);
     padding:10px 12px;font:600 12.5px/1.5 var(--mono);color:var(--ink);
   }
-  .carline b{color:var(--accent)}
+  .carline b{color:var(--ink);background:#EFE7D9;padding:0 4px}
 
   /* ---------- steps ---------- */
   .step{border-top:1px solid var(--line);padding:22px 0 6px;scroll-margin-top:70px}
@@ -61,7 +62,7 @@
   .shead .ttl{flex:1;min-width:0}
   .shead h3{margin:0;font-size:18.5px;line-height:1.25;letter-spacing:-.02em;font-weight:750}
   .shead .sub{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
-  .state{flex:0 0 auto;width:10px;height:10px;margin-top:6px;background:var(--line-strong)}
+  .state{flex:0 0 auto;width:13px;height:13px;margin-top:5px;background:var(--line-strong);border:1px solid rgba(0,0,0,.14)}
   .state.ok{background:var(--ok)} .state.warn{background:#D9A21B} .state.bad{background:var(--bad)}
 
   .tap{
@@ -110,7 +111,10 @@
   .field textarea{font:500 14px/1.45 var(--mono);resize:vertical;min-height:64px}
   .field select{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;font-weight:600;font-size:15px}
   .field .unit{flex:0 0 auto;display:flex;align-items:center;padding:0 10px 2px 0;font:600 12px/1 var(--mono);color:var(--muted)}
-  .field.flag{box-shadow:inset 3px 0 0 var(--accent)}
+  .field.flag{box-shadow:inset 3px 0 0 var(--bad)}
+  .field.flag .in{background:var(--bad-soft)}
+  .field.flag input,.field.flag select,.field.flag textarea{color:var(--bad)}
+  .field.flag .fl label{color:var(--bad)}
   .field .hint{font-size:12.5px;color:var(--muted);padding:0 10px 9px;line-height:1.4}
 
   /* ---------- callout ---------- */
@@ -125,7 +129,8 @@
   #results .lede{margin:0 0 16px;color:var(--muted);font-size:14.5px}
   #out{
     width:100%;min-height:230px;border:1px solid var(--line-strong);background:var(--surface);
-    font:500 12.5px/1.6 var(--mono);padding:12px;color:var(--ink);resize:vertical;
+    font:500 12.5px/1.6 var(--mono);padding:12px;color:var(--ink);resize:none;
+    overflow-wrap:anywhere;
   }
   .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
   button{
@@ -152,7 +157,7 @@
   #zoom img{width:100%;height:auto;display:block}
   #zoom .x{position:fixed;top:14px;right:14px;background:#fff;color:#000;border:0;padding:9px 13px;font:700 13px/1 var(--mono);cursor:pointer;border-radius:var(--r)}
   .jump{
-    position:fixed;left:16px;right:16px;bottom:16px;z-index:50;max-width:628px;margin:0 auto;
+    position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;max-width:628px;margin:0 auto;
     display:flex;gap:8px;
   }
   .jump button{flex:1;background:var(--accent);border-color:var(--accent)}
@@ -186,6 +191,7 @@
     <div class="note">
       <p><strong>Why this car needs the deep read.</strong> Hyundai reacquired it in June 2026 after two battery repairs in five months, and it is still open on the fire recall 26V432. So the two things you are hunting for are a weak 12V / ICCU charging fault and any stored fault codes.</p>
       <p>Every screenshot below is the developer's own, so the numbers in them are demo data, not this car. Use them to find the field, not to judge the value.</p>
+      <p>The small square beside each step turns <strong>green</strong> once you have read it, <strong>amber</strong> if something is worth a second look, and <strong>red</strong> if it is a flag. A red box below means renegotiate or walk.</p>
     </div>
   </section>
 
